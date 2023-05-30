@@ -1,0 +1,49 @@
+pipeline:
+  identifier: Build_drone_with_go_1684958201101
+  name: Build drone-with-go
+  orgIdentifier: default
+  projectIdentifier: sandbox
+  properties:
+    ci:
+      codebase:
+        connectorRef: Jim_Sheldon
+        repoName: jimsheldon-sandbox/drone-with-go
+        build: <+input>
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  identifier: build
+                  name: Build
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: golang
+                    shell: Bash
+                    command: time go test -v ./...
+              - step:
+                  type: Run
+                  identifier: test
+                  name: Test
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: golang
+                    shell: Bash
+                    command: time go test -v ./...
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: org.macbook91
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          sharedPaths:
+            - /root/.cache
+            - /go/pkg/mod
+        type: CI
