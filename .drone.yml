@@ -16,5 +16,4 @@ steps:
   commands:
   - go build
 
-# trigger
 ...
