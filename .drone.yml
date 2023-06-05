@@ -20,4 +20,8 @@ steps:
   commands:
   - go build
 
+trigger:
+  branch:
+  - main
+
 ...
