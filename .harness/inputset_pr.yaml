@@ -1,0 +1,15 @@
+inputSet:
+  identifier: pull_request
+  name: Pull Request
+  orgIdentifier: CI_Training
+  projectIdentifier: drone_with_go
+  pipeline:
+    identifier: drone_with_go
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
+  object Object: pipeline.properties.ci.codebase
