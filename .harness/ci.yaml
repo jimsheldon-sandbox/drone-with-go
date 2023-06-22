@@ -8,7 +8,7 @@ pipeline:
         codebase:
           build: <+input>
           connectorRef: account.Jim_Sheldon_GitHub
-          repoName: drone-with-go
+          repoName: jimsheldon-sandbox/drone-with-go
     
    stages:
       - stage:
