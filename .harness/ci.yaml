@@ -1,0 +1,100 @@
+pipeline:
+   name: drone-with-go
+   identifier: drone_with_go
+   projectIdentifier: drone_with_go
+   orgIdentifier: jimexample
+   properties:
+      ci:
+        codebase:
+          build: <+input>
+          connectorRef: account.Jim_Sheldon_GitHub
+          repoName: drone-with-go
+    
+   stages:
+      - stage:
+          variables:
+            - name: CI
+              type: String
+              description: ""
+              required: false
+              value: "true"
+            - name: CI_COMMIT_BRANCH
+              type: String
+              description: ""
+              required: false
+              value: <+codebase.branch>
+            - name: DRONE
+              type: String
+              description: ""
+              required: false
+              value: "true"
+            - name: DRONE_REPO_NAME
+              type: String
+              description: ""
+              required: false
+              value: <+codebase.repoUrl.split('/')[4]>
+          identifier: default
+          name: default
+          spec:
+            cloneCodebase: true
+            sharedPaths:
+              - /var/run
+              - /var/lib/docker
+            execution:
+              steps:
+              - step:
+                  type: Background
+                  name: dind
+                  identifier: dind
+                  spec:
+                    connectorRef: account.YourConnector
+                    image: docker:dind
+                    shell: Sh
+                    privileged: true
+              - step:
+                  type: Run
+                  name: docker health
+                  identifier: docker_health
+                  spec:
+                    connectorRef: account.Jim_Sheldon
+                    image: plugins/docker
+                    shell: Sh
+                    command: |-
+                      while ! docker ps ;do   
+                        echo "Docker not available yet"
+                        sleep 1 
+                      done  
+                      echo "Docker Service Ready"
+              - step:
+                  identifier: test
+                  name: test
+                  spec:
+                    command: |-
+                      go vet
+                      go test -v -cover
+                    connectorRef: account.Jim_Sheldon
+                    image: golang:latest
+                    imagePullPolicy: IfNotPresent
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: build
+                  name: build
+                  spec:
+                    command: go build
+                    connectorRef: account.Jim_Sheldon
+                    image: golang:latest
+                    imagePullPolicy: IfNotPresent
+                  timeout: ""
+                  type: Run
+            platform:
+              arch: Arm64
+              os: Linux
+            runtime:
+              spec: {}
+              type: Cloud
+          type: CI
+          when:
+            condition: <+trigger.branch> == "master"
+            pipelineStatus: Success
+    
