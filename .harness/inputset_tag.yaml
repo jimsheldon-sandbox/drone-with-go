@@ -1,0 +1,15 @@
+inputSet:
+  identifier: tag
+  name: Tag
+  orgIdentifier: jimexample
+  projectIdentifier: drone_with_go
+  pipeline:
+    identifier: drone_with_go
+    properties:
+      ci:
+        codebase:
+          build:
+            type: tag
+            spec:
+              tag: <+trigger.tag>
+  object Object: pipeline.properties.ci.codebase
