@@ -47,8 +47,8 @@ pipeline:
                   name: dind
                   identifier: dind
                   spec:
-                    connectorRef: account.YourConnector
-                    image: docker:dind
+                    connectorRef: account.Jim_Sheldon
+                    image: docker:24-dind
                     shell: Sh
                     privileged: true
               - step:
