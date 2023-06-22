@@ -1,0 +1,15 @@
+inputSet:
+  identifier: push
+  name: Push
+  orgIdentifier: jimexample
+  projectIdentifier: drone_with_go
+  pipeline:
+    identifier: drone_with_go
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
+  object Object: pipeline.properties.ci.codebase
