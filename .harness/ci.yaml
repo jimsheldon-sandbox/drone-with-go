@@ -48,7 +48,7 @@ pipeline:
                       echo <+codebase.commitSha.substring(0,8)>
                       echo <+codebase.repoUrl.split('/')[4]>
                       echo ${DRONE_TAG##v}
-                      echo <+trigger.payload.ref.split('/')[1]>
+                      echo <+trigger.payload.ref.split('/')[2]>
                     envVariables:
                       MYVAR: $DRONE
                       DRONE_TAG: v1.2.3
