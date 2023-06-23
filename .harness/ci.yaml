@@ -53,6 +53,7 @@ pipeline:
                       MYVAR: $DRONE
                       DRONE_TAG: v1.2.3
                     imagePullPolicy: IfNotPresent
+                    shell: Bash
                   timeout: ""
                   type: Run
           platform:
