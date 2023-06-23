@@ -49,7 +49,7 @@ pipeline:
                       echo <+codebase.repoUrl.split('/')[4]>
                       echo ${DRONE_TAG##v}
                       echo <+trigger.payload.ref.split('/')[2]>
-                      echo <+<+trigger.payload.ref.split('/')[2]>.substring(<+trigger.payload.ref>.split('v')[1])>
+                      echo <+<+trigger.payload.ref.split('/')[2]>.substring(<+trigger.payload.ref.split('/')[2]>.indexOf('v'))>
                     envVariables:
                       MYVAR: $DRONE
                       DRONE_TAG: v1.2.3
